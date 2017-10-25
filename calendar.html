@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Calendar Personal Dashboard</title>
+    <style>
+    * {
+      box-sizing: border-box;
+
+    }
+    ul {
+      list-style-type: none;
+    }
+    body {
+      font-size: 62.5%;
+      font-family: Verdana, sans-serif;
+      margin: 0;
+    }
+    .container {
+      width: 60%;
+    }
+    .monthYear {
+      width: 100%;
+      height: 20%;
+      background-color: lightblue;
+      text-align: center;
+      padding: 4.5em 2em;
+    }
+    .monthYear ul {
+      padding: 0;
+      margin: 0;
+    }
+
+    .monthYear ul li {
+      color: white;
+      font-size:1.5em;
+      /*text-transform: uppercase;*/
+      letter-spacing: 0.15em;
+    }
+    .monthYear .prev {
+      float: left;
+      padding-top: 0.5em;
+    }
+    .monthYear .next {
+      float: right;
+      padding-top: 0.5em;
+    }
+    .dayNames {
+      background-color: yellow;
+      padding: 0.8em 0;
+      margin: 0;
+    }
+    .dayNames li{
+      display: inline-block;
+      width: 13.6%;
+      margin-right: -0.11em;
+      text-align: center;
+      font-size: 1.2em;
+      color: #666;
+    }
+    .dates {
+      background-color: #eee;
+      padding: 0.8em 0;
+      margin: 0;
+    }
+    .dates li{
+      display: inline-block;
+      width: 13.6%;
+      margin: 0 0 0.5em 0;
+      text-align: center;
+      font-size: 1.1em;
+      color: #777;
+      /*border: 1px solid red;*/
+    }
+    .active {
+      padding: 0.2em;
+      background-color: #1abc9c;
+      color: white !important
+    }
+    </style>
+    <script type="text/javascript">
+      function makeCal(){
+        var dates = document.getElementsByClassName("dates")[0];
+        var numOfDays = 31;
+        var i,j;
+        // today
+        var today = new Date();
+        var todayDate = today.getDate();
+
+        //start position
+        var todayMonth = today.getMonth(); //0-11
+        var todayYear = today.getFullYear();
+        var x = new Date(todayYear, todayMonth+1, 1); //+1 for testing cos today's month starts on Sunday --> can't see the effect
+        var startDay = x.getDay(); //wed = 3
+
+        console.log(todayMonth);
+        console.log(todayYear);
+        console.log(x);
+        console.log(startDay);
+
+        //j starts from zero cos getDay starts from 0 for Sunday, < because the startDay should be 1st of the month which is the next for loop
+        for (i = 0; i < startDay; i++){
+          var nodeEmpty = document.createElement("LI");
+          // var textnodeEmpty = document.createTextNode(startDay);
+
+          // nodeEmpty.appendChild(textnodeEmpty);
+          nodeEmpty.style.width = "14.29%";
+
+          dates.appendChild(nodeEmpty);
+        }
+
+        //i starts from 1 because the number of days in a month start from 1
+        for (j = 1; j <= numOfDays; j++) {
+          if (j == todayDate){
+            var node = document.createElement("LI");
+            var textnode = document.createTextNode(j);
+
+            node.appendChild(textnode);
+            node.style.width = "14.29%";
+            node.className = "active";
+
+            dates.appendChild(node);
+          }
+          var node = document.createElement("LI");
+          var textnode = document.createTextNode(j);
+
+          node.appendChild(textnode);
+          node.style.width = "14.29%";
+
+          dates.appendChild(node);
+
+        }
+
+      }
+    </script>
+  </head>
+  <!-- <body> -->
+  <body onLoad="makeCal()">
+    <div class="container">
+      <div class="monthYear">
+        <ul>
+          <li class="prev">&#10094;</li>
+          <li class="next">&#10095;</li>
+          <li>AUGUST<br><span id="year">2017</span></li>
+        </ul>
+      </div>
+      <ul class="dayNames">
+        <li>Sun</li>
+        <li>Mon</li>
+        <li>Tues</li>
+        <li>Wed</li>
+        <li>Thu</li>
+        <li>Fri</li>
+        <li>Sat</li>
+      </ul>
+      <ul class="dates">
+        <!-- <li>1</li>
+        <li>2</li>
+        <li>3</li>
+        <li>4</li>
+        <li>5</li>
+        <li>6</li>
+        <li>7</li>
+        <li>8</li>
+        <li>9</li>
+        <li><span class="active">10</span></li>
+        <li>11</li>
+        <li>12</li>
+        <li>13</li>
+        <li>14</li>
+        <li>15</li>
+        <li>16</li>
+        <li>17</li>
+        <li>18</li>
+        <li>19</li>
+        <li>20</li>
+        <li>21</li>
+        <li>22</li>
+        <li>23</li>
+        <li>24</li>
+        <li>25</li>
+        <li>26</li>
+        <li>27</li>
+        <li>28</li>
+        <li>29</li>
+        <li>30</li>
+        <li>31</li> -->
+      </ul>
+    </div>
+  </body>
+</html>
