@@ -72,7 +72,6 @@
       text-align: center;
       font-size: 1.1em;
       color: #777;
-      border: 1px solid red;
     }
     .active {
       padding: 0.2em;
@@ -81,12 +80,20 @@
     }
     </style>
     <script type="text/javascript">
-    //** TO DO leap Year **
-    function leapYear(year){
-      if (year % 4 == 0) {
-        return true
+
+    function leapYearCheck(year){
+      if (year % 4 === 0) {
+        if(year % 100){
+          if(year % 400){
+            return true;
+          } else {
+            return false;
+          }
+        } else {
+          return true;
+        }
       } else {
-        return false
+        return false;
       }
     }
     function removeAddDates(){
@@ -144,7 +151,8 @@
           month = 11;
         }
         month = month - 1;
-        monthNameDaysStart(month, year, 0);
+        var leapYear = leapYearCheck(year);
+        monthNameDaysStart(month, year, 0, leapYear);
       }
 
       function next(){
@@ -193,35 +201,37 @@
           console.log(typeof(year));
         }
         month = month + 1;
-        monthNameDaysStart(month, year, 0);
+        var leapYear = leapYearCheck(year);
+        monthNameDaysStart(month, year, 0, leapYear);
       }
-      //
-      // function today(){
-      //   makeCal(0);
-      // }
+
       function today() {
         var today = new Date();
         var todayDate = today.getDate();
         //today - to find start position
         var todayMonth = today.getMonth(); //0-11
         var todayYear = today.getFullYear();
-        monthNameDaysStart(todayMonth, todayYear, todayDate);
+        var leapYear = leapYearCheck(todayYear);
+        monthNameDaysStart(todayMonth, todayYear, todayDate, leapYear);
       }
 
-      function monthNameDaysStart(todayMonth, todayYear, todayDate){
+      function monthNameDaysStart(todayMonth, todayYear, todayDate, leapYear){
         var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+        var daysInMonth;
         var month = todayMonth;
         var monthName = months[month];
-        // console.log("month = " + month);
-
-        var daysInMonth = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+        if (leapYear){
+          daysInMonth = [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+        } else {
+          daysInMonth = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+        }
         // info using today's info
         //(1) number of days in that month
         var numOfDays = daysInMonth[month];
         //(2)startDay of that month
         var year = todayYear;
         var x = new Date(year, month, 1);
-        var startDay = x.getDay(); //wed = 3
+        var startDay = x.getDay();
         makeCal(monthName, year, numOfDays, startDay, todayDate);
       }
 
@@ -239,9 +249,6 @@
         //j starts from zero cos getDay starts from 0 for Sunday, < because the startDay should be 1st of the month which is the next for loop
         for (i = 0; i < startDay; i++){
           var nodeEmpty = document.createElement("LI");
-          // var textnodeEmpty = document.createTextNode(startDay);
-
-          // nodeEmpty.appendChild(textnodeEmpty);
           nodeEmpty.style.width = "13.6%";
 
           dates.appendChild(nodeEmpty);
@@ -272,7 +279,6 @@
       }
     </script>
   </head>
-  <!-- <body> -->
   <body onLoad="today()">
     <div class="container">
       <div class="monthYear">
@@ -292,37 +298,6 @@
         <li>Sat</li>
       </ul>
       <ul class="dates">
-        <!-- <li>1</li>
-        <li>2</li>
-        <li>3</li>
-        <li>4</li>
-        <li>5</li>
-        <li>6</li>
-        <li>7</li>
-        <li>8</li>
-        <li>9</li>
-        <li><span class="active">10</span></li>
-        <li>11</li>
-        <li>12</li>
-        <li>13</li>
-        <li>14</li>
-        <li>15</li>
-        <li>16</li>
-        <li>17</li>
-        <li>18</li>
-        <li>19</li>
-        <li>20</li>
-        <li>21</li>
-        <li>22</li>
-        <li>23</li>
-        <li>24</li>
-        <li>25</li>
-        <li>26</li>
-        <li>27</li>
-        <li>28</li>
-        <li>29</li>
-        <li>30</li>
-        <li>31</li> -->
       </ul>
     </div>
   </body>
