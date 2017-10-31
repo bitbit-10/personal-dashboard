@@ -16,7 +16,7 @@
       margin: 0;
     }
     .container {
-      width: 60%;
+      width: 50%;
     }
     .monthYear {
       width: 100%;
@@ -43,6 +43,9 @@
       float: left;
       padding-top: 0.5em;
     }
+    .monthYear .prev,.next:hover {
+      cursor: pointer;
+    }
     .monthYear .next {
       float: right;
       padding-top: 0.5em;
@@ -68,13 +71,13 @@
     .dates li{
       display: inline-block;
       width: 13.6%;
+      height: 2.8em;
       margin: 0 0.2em 0.5em 0;
       text-align: center;
-      font-size: 1.1em;
+      font-size: 1.3em;
       color: #777;
     }
     .active {
-      padding: 0.2em;
       background-color: #1abc9c;
       color: white !important
     }
@@ -115,7 +118,6 @@
         if (currentMonth === "January") {
           month = 0 + 12;
           year = year -1;
-          console.log(typeof(year));
         }
         else if (currentMonth === "February") {
           month = 1;
@@ -161,7 +163,7 @@
 
         var month;
         var currentMonth = document.getElementById("month").childNodes[0].nodeValue;
-        console.log("the current month is " + currentMonth);
+
         if (currentMonth === "January") {
           month = 0;
         }
@@ -198,7 +200,6 @@
         else if (currentMonth === "December") {
           month = 11 - 12;
           year = year + 1;
-          console.log(typeof(year));
         }
         month = month + 1;
         var leapYear = leapYearCheck(year);
