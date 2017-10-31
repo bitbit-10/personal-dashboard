@@ -33,8 +33,11 @@
     .monthYear ul li {
       color: white;
       font-size:1.5em;
-      /*text-transform: uppercase;*/
+      text-transform: uppercase;
       letter-spacing: 0.15em;
+    }
+    .monthYear #year {
+      font-size: 0.95em;
     }
     .monthYear .prev {
       float: left;
@@ -65,11 +68,11 @@
     .dates li{
       display: inline-block;
       width: 13.6%;
-      margin: 0 0 0.5em 0;
+      margin: 0 0.2em 0.5em 0;
       text-align: center;
       font-size: 1.1em;
       color: #777;
-      /*border: 1px solid red;*/
+      border: 1px solid red;
     }
     .active {
       padding: 0.2em;
@@ -78,24 +81,160 @@
     }
     </style>
     <script type="text/javascript">
-      function makeCal(){
-        var dates = document.getElementsByClassName("dates")[0];
-        var numOfDays = 31;
-        var i,j;
-        // today
+    //** TO DO leap Year **
+    function leapYear(year){
+      if (year % 4 == 0) {
+        return true
+      } else {
+        return false
+      }
+    }
+    function removeAddDates(){
+      var dates = document.getElementsByClassName("dates")[0];
+      var container = document.getElementsByClassName("container")[0];
+      container.removeChild(dates);
+      var newDates = document.createElement("UL");
+      newDates.className = "dates";
+      container.appendChild(newDates);
+    }
+
+      function previous(){
+        removeAddDates();
+        var year = parseInt(document.getElementById("year").textContent);
+
+        var month;
+        var currentMonth = document.getElementById("month").childNodes[0].nodeValue;
+
+        if (currentMonth === "January") {
+          month = 0 + 12;
+          year = year -1;
+          console.log(typeof(year));
+        }
+        else if (currentMonth === "February") {
+          month = 1;
+        }
+        else if (currentMonth === "March") {
+          month = 2;
+        }
+        else if (currentMonth === "April") {
+          month = 3;
+        }
+        else if (currentMonth === "May") {
+          month = 4;
+        }
+        else if (currentMonth === "June") {
+          month = 5;
+        }
+        else if (currentMonth === "July") {
+          month = 6;
+        }
+        else if (currentMonth === "August") {
+          month = 7;
+        }
+        else if (currentMonth === "September") {
+          month = 8;
+        }
+        else if (currentMonth === "October") {
+          month = 9;
+        }
+        else if (currentMonth === "November") {
+          month = 10;
+        }
+        else if (currentMonth === "December") {
+          month = 11;
+        }
+        month = month - 1;
+        monthNameDaysStart(month, year, 0);
+      }
+
+      function next(){
+        removeAddDates();
+        var year = parseInt(document.getElementById("year").textContent);
+
+        var month;
+        var currentMonth = document.getElementById("month").childNodes[0].nodeValue;
+        console.log("the current month is " + currentMonth);
+        if (currentMonth === "January") {
+          month = 0;
+        }
+        else if (currentMonth === "February") {
+          month = 1;
+        }
+        else if (currentMonth === "March") {
+          month = 2;
+        }
+        else if (currentMonth === "April") {
+          month = 3;
+        }
+        else if (currentMonth === "May") {
+          month = 4;
+        }
+        else if (currentMonth === "June") {
+          month = 5;
+        }
+        else if (currentMonth === "July") {
+          month = 6;
+        }
+        else if (currentMonth === "August") {
+          month = 7;
+        }
+        else if (currentMonth === "September") {
+          month = 8;
+        }
+        else if (currentMonth === "October") {
+          month = 9;
+        }
+        else if (currentMonth === "November") {
+          month = 10;
+        }
+        else if (currentMonth === "December") {
+          month = 11 - 12;
+          year = year + 1;
+          console.log(typeof(year));
+        }
+        month = month + 1;
+        monthNameDaysStart(month, year, 0);
+      }
+      //
+      // function today(){
+      //   makeCal(0);
+      // }
+      function today() {
         var today = new Date();
         var todayDate = today.getDate();
-
-        //start position
+        //today - to find start position
         var todayMonth = today.getMonth(); //0-11
         var todayYear = today.getFullYear();
-        var x = new Date(todayYear, todayMonth+1, 1); //+1 for testing cos today's month starts on Sunday --> can't see the effect
-        var startDay = x.getDay(); //wed = 3
+        monthNameDaysStart(todayMonth, todayYear, todayDate);
+      }
 
-        console.log(todayMonth);
-        console.log(todayYear);
-        console.log(x);
-        console.log(startDay);
+      function monthNameDaysStart(todayMonth, todayYear, todayDate){
+        var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+        var month = todayMonth;
+        var monthName = months[month];
+        // console.log("month = " + month);
+
+        var daysInMonth = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+        // info using today's info
+        //(1) number of days in that month
+        var numOfDays = daysInMonth[month];
+        //(2)startDay of that month
+        var year = todayYear;
+        var x = new Date(year, month, 1);
+        var startDay = x.getDay(); //wed = 3
+        makeCal(monthName, year, numOfDays, startDay, todayDate);
+      }
+
+
+      function makeCal(monthName, year, numOfDays, startDay, todayDate){
+
+        //Header display month, year
+        var headerMonth = document.getElementById("month");
+        headerMonth.innerHTML = monthName + "<br><span id=\"year\">" + year + "</span>";
+
+        //Body of Calendar - Dates
+        var dates = document.getElementsByClassName("dates")[0];
+        var i,j;
 
         //j starts from zero cos getDay starts from 0 for Sunday, < because the startDay should be 1st of the month which is the next for loop
         for (i = 0; i < startDay; i++){
@@ -103,7 +242,7 @@
           // var textnodeEmpty = document.createTextNode(startDay);
 
           // nodeEmpty.appendChild(textnodeEmpty);
-          nodeEmpty.style.width = "14.29%";
+          nodeEmpty.style.width = "13.6%";
 
           dates.appendChild(nodeEmpty);
         }
@@ -115,32 +254,32 @@
             var textnode = document.createTextNode(j);
 
             node.appendChild(textnode);
-            node.style.width = "14.29%";
+            node.style.width = "13.6%";
             node.className = "active";
 
             dates.appendChild(node);
+          }else {
+            var node = document.createElement("LI");
+            var textnode = document.createTextNode(j);
+
+            node.appendChild(textnode);
+            node.style.width = "13.6%";
+
+            dates.appendChild(node);
           }
-          var node = document.createElement("LI");
-          var textnode = document.createTextNode(j);
-
-          node.appendChild(textnode);
-          node.style.width = "14.29%";
-
-          dates.appendChild(node);
-
         }
 
       }
     </script>
   </head>
   <!-- <body> -->
-  <body onLoad="makeCal()">
+  <body onLoad="today()">
     <div class="container">
       <div class="monthYear">
         <ul>
-          <li class="prev">&#10094;</li>
-          <li class="next">&#10095;</li>
-          <li>AUGUST<br><span id="year">2017</span></li>
+          <li class="prev" onclick="previous()">&#10094;</li>
+          <li class="next" onclick="next()">&#10095;</li>
+          <li id="month">AUGUST</li>
         </ul>
       </div>
       <ul class="dayNames">
