@@ -1,0 +1,158 @@
+* {
+  box-sizing: border-box;
+
+}
+ul {
+  list-style-type: none;
+}
+body {
+  font-size: 62.5%;
+  font-family: Verdana, sans-serif;
+  background-color: #ffffff;
+  margin: 0;
+}
+#allContainer {
+  margin-top: 1%;
+  margin-left: 1%;
+}
+/*Container for Calendar + Stickys*/
+.container {
+  width: 55%;
+  float:left;
+}
+/*Calendar*/
+.monthYear {
+  width: 100%;
+  height: 20%;
+  background-color: lightblue;
+  text-align: center;
+  padding: 4.5em 2em;
+}
+.monthYear ul {
+  padding: 0;
+  margin: 0;
+}
+
+.monthYear ul li {
+  color: white;
+  font-size:1.5em;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+}
+.monthYear #year {
+  font-size: 0.95em;
+}
+.monthYear .prev {
+  float: left;
+  padding-top: 0.5em;
+}
+.monthYear .prev,.next:hover {
+  cursor: pointer;
+}
+.monthYear .next {
+  float: right;
+  padding-top: 0.5em;
+}
+.dayNames {
+  background-color: yellow;
+  padding: 0.8em 0;
+  margin: 0;
+}
+.dayNames li{
+  display: inline-block;
+  width: 13.6%;
+  margin-right: -0.11em;
+  text-align: center;
+  font-size: 1.2em;
+  color: #666;
+}
+.dates {
+  background-color: #eee;
+  padding: 0.8em 0;
+  margin: 0;
+}
+.dates li{
+  display: inline-block;
+  width: 13.6%;
+  /*height: 2.8em;*/
+  padding:1em 0;
+  margin: 0 0.2em 0 0;
+  text-align: center;
+  font-size: 1.3em;
+  color: #777;
+}
+.active {
+  background-color: #1abc9c;
+  color: white !important
+}
+
+/*Youtube*/
+#youtubeContainer {
+  width: 30%;
+  float: left;
+  margin-left: 7%;
+}
+#searchContainer {
+  margin-bottom: 5%;
+  height: 3em;
+}
+#search {
+  width: 50%;
+  height: 100%;
+  margin-left: 10%;
+}
+#searchBtn {
+  width: 15%;
+  height: 100%;
+  margin-left: 5%;
+}
+#result {
+  font-size: 1.6em;
+  font-weight: bold;
+}
+#iframeContainer {
+  position: relative;
+  width: 100%;
+  height:0;
+  padding-bottom: 60.94%;
+}
+iframe {
+  width: 100%;
+}
+#iframeContainer iframe {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+}
+li {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+.resultsThumbnails {
+  width: 100%;
+  height: 11em;
+  margin-top: 5%;
+}
+
+.thumbnail {
+  height: 100%;
+  float: left;
+}
+#vidDetails {
+  float: left;
+  margin-left: 2%;
+  width: 60%;
+}
+.title {
+  font-size: 1.2em;
+  font-weight: 600;
+  margin-top: 11%;
+}
+.channelTitle {
+  font-size: 1.1em;
+  color: grey;
+  margin-top: -3%;
+}
