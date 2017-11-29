@@ -3,10 +3,15 @@
   <head>
     <title>Calendar Personal Dashboard</title>
     <link rel="stylesheet" href="style.css">
+    <script
+  src="https://code.jquery.com/jquery-3.2.1.min.js"
+  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+  crossorigin="anonymous"></script>
     <script src="calendar.js" type="text/javascript"></script>
+    <script src="stickys.js" type="text/javascript"></script>
 
   </head>
-  <body onLoad="today()">
+  <body onLoad="today();">
     <div id="allContainer">
         <!-- Left half -->
         <div class="container">
@@ -29,7 +34,13 @@
           <ul class="dates">
           </ul>
 
-
+          <!-- Panel - Stickys -->
+          <div id="stickysContainer">
+              <button id="newNoteButton" onclick="addNote()">New Sticky</button>
+              <button onclick="newNote()">Add note</button>
+              <a href="idb.html">Click me for IDB</a>
+          </div>
+          </div>
 
       <!-- Right Half -->
         <div id="youtubeContainer">

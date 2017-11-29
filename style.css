@@ -24,7 +24,7 @@ body {
 .monthYear {
   width: 100%;
   height: 20%;
-  background-color: lightblue;
+  background-color: #7a5230; /*#614126*/
   text-align: center;
   padding: 4.5em 2em;
 }
@@ -54,7 +54,7 @@ body {
   padding-top: 0.5em;
 }
 .dayNames {
-  background-color: yellow;
+  background-color: rgba(255,255,51,0.6);
   padding: 0.8em 0;
   margin: 0;
 }
@@ -67,7 +67,7 @@ body {
   color: #666;
 }
 .dates {
-  background-color: #eee;
+  background-color: rgba(218,165,32, 0.7);
   padding: 0.8em 0;
   margin: 0;
 }
@@ -84,6 +84,54 @@ body {
 .active {
   background-color: #1abc9c;
   color: white !important
+}
+
+/*Stickys*/
+#stickysContainer {
+  position: relative;
+  background-image: url(../images/board.jpg);
+  padding-top: 66.67%; /*aspect ratio*/
+  width: 100%;
+}
+#newNoteButton {
+  position: absolute;
+  top: 0;
+}
+.sticky {
+  position: absolute;
+  height: 19em;
+  width: 20em;
+  background-color: rgb(255, 255, 204);
+  -webkit-box-shadow: 0px 5px 10px rgba(0,0,0,0.5);
+  cursor: text;
+}
+
+.closeButton {
+  position: absolute;
+  display: none;
+  background-image: url(../images/remove.png);
+  height: 3em;
+  width: 3em;
+  top: -15px;
+  left: -15px;
+  cursor: pointer;
+}
+
+.sticky:hover .closeButton {
+  display: block;
+}
+
+.text {
+  margin: 1em;
+}
+
+.timestamp {
+  position: absolute;
+  background-color: rgb(240, 230, 140);
+  bottom: 0;
+  left: 0;
+  height: 3em;
+  width: 100%;
 }
 
 /*Youtube*/
@@ -155,4 +203,8 @@ li {
   font-size: 1.1em;
   color: grey;
   margin-top: -3%;
+}
+#resultsContainer {
+  height: 45em;
+  overflow:auto;
 }
