@@ -1,4 +1,6 @@
+  var highestZindex = 0;
 $(document).ready(function(){
+
   //Open database
   var request = indexedDB.open("stickys", 1);
 
@@ -107,7 +109,9 @@ $(document).ready(function(){
   requestUpdate.onerror = function(){
     console.log('Error: Customer data not updated');
   };
+
   };
+
   }
 
 // Add Customers
@@ -139,15 +143,15 @@ function addNote(){
     newNote(id, timeStamp);
     // properties of newNote
     var pos = $('#'+id).position();
-    var idString = id.toString();
-    console.log("idString" + typeof idString);
-    var zIndex = document.getElementById(idString).style.zIndex;
+    // var idString = id.toString();
+    // console.log("idString" + typeof idString);
+    var zIndex = document.getElementById(id).style.zIndex;
 
       var top = pos.top;
       var left = pos.left;
       var text = "";
       var timestamp = timeStamp;
-      var zIndex = "";
+      var zIndex = zIndex;
     console.log("position: Top = " + pos.top + ", Left = " + pos.left);
     var text = $('#'+id).children(".text").html();
     console.log("text : " + text);
@@ -170,6 +174,12 @@ function newNote(id, timeStamp){
   var board = document.getElementById("stickysContainer");
   newNote.className = "sticky";
   newNote.id = id;
+  highestZindex += 1;
+  newNote.style.zIndex = highestZindex;
+  console.log("newNote() zIndex type: " + typeof newNote.style.zIndex);
+  newNote.addEventListener("click", function(){
+    newNote.style.zIndex = highestZindex + 1;
+  });
   // console.log("newNote.previousSibling - sticky : " + newNote.previousSibling);
 
   // position of each new sticky
@@ -202,6 +212,103 @@ function newNote(id, timeStamp){
   text.setAttribute('data-id', id);
   text.setAttribute('onkeyup', "updateNote(" + id + ")");
   newNote.appendChild(text);
+
+  // Movement of note
+  $("#" + id).mousedown(function(e){
+    var mouseStartTop = e.pageY;
+    var mouseStartLeft = e.pageX;
+
+    // ZINDEX
+    highestZindex += 1;
+    newNote.style.zIndex = highestZindex;
+    console.log("newNote()mouseDown zIndex type: " + typeof newNote.style.zIndex);
+    // ===== update db with note's new zindex
+    // Get transaction - FInd customer record
+    var transaction = db.transaction(["notes"], "readwrite");
+    // Ask for objectStore
+    var store = transaction.objectStore("notes");
+    var request = store.get(id);
+
+    // onsuccess
+    request.onsuccess = function(e){
+      var data = request.result;
+      data.zIndex = newNote.style.zIndex;
+
+    // Put - Store Updated Text
+    var requestUpdate = store.put(data);
+
+    requestUpdate.onsuccess = function(){
+      console.log('Customer data updated');
+    };
+
+    requestUpdate.onerror = function(){
+      console.log('Error: Customer data not updated');
+    };
+
+    };
+    //END === ZINDEX
+    $(this).bind("mousemove", mousemove);
+
+  $("#" + id).mouseup(function(e){
+    $(this).unbind("mousemove", mousemove);
+    // ===== update db with note's new coods
+    // Get transaction - FInd customer record
+    var transaction = db.transaction(["notes"], "readwrite");
+    // Ask for objectStore
+    var store = transaction.objectStore("notes");
+    var request = store.get(id);
+
+    // onsuccess
+    request.onsuccess = function(e){
+      var data = request.result;
+      var notePos = $("#" + id).position();
+      data.top = notePos.top;
+      data.left = notePos.left;
+
+    // Put - Store Updated Text
+    var requestUpdate = store.put(data);
+
+    requestUpdate.onsuccess = function(){
+      console.log('Customer data updated');
+    };
+
+    requestUpdate.onerror = function(){
+      console.log('Error: Customer data not updated');
+    };
+
+    };
+    });
+
+  function mousemove(e){
+  var mouseTop = e.pageY;
+  var mouseLeft = e.pageX;
+
+  var diffTop = mouseTop - mouseStartTop;
+  var diffLeft = mouseLeft - mouseStartLeft;
+
+  // ===== move note
+  // Get transaction - FInd customer record
+  var transaction = db.transaction(["notes"], "readwrite");
+  // Ask for objectStore
+  var store = transaction.objectStore("notes");
+  var request = store.get(id);
+
+  // onsuccess
+  request.onsuccess = function(e){
+    var data = request.result;
+    // note current position from db
+    var noteTop = data.top;
+    var noteLeft = data.left;
+    //  note move to position
+    var notePosTop = noteTop + diffTop;
+    var notePosLeft = noteLeft + diffLeft;
+
+    $('#'+ id).css('top', notePosTop);
+    $('#'+ id).css('left', notePosLeft);
+
+  };
+  }
+});
 
 // ===click note, bring focus to text - indicate able to type text - idea? use id="..." or id from db
   // newNote.addEventListener("click", function(e){
@@ -247,9 +354,11 @@ function showNotes(db){
   index.openCursor().onsuccess = function(e){
     var cursor = e.target.result;
     if(cursor) {
-
+      var cursorzIndex = parseInt(cursor.value.zIndex);
       existingNotes(cursor.value.id, cursor.value.top, cursor.value.left, cursor.value.text, cursor.value.timestamp, cursor.value.zIndex);
-
+      if (highestZindex < cursorzIndex){
+        highestZindex = cursorzIndex;
+      }
       cursor.continue();
 
     }
@@ -266,6 +375,35 @@ function existingNotes(id, top, left, textContent, timeStamp, zIndex){
   newNote.style.top = top + "px";
   newNote.style.left = left + "px";
   newNote.style.zIndex = zIndex;
+  newNote.addEventListener("click", function(){
+    highestZindex += 1;
+    newNote.style.zIndex = highestZindex;
+    console.log("existingNotes() zIndex type: " + typeof newNote.style.zIndex);
+    // ===== update db with note's new zindex
+    // Get transaction - FInd customer record
+    var transaction = db.transaction(["notes"], "readwrite");
+    // Ask for objectStore
+    var store = transaction.objectStore("notes");
+    var request = store.get(id);
+
+    // onsuccess
+    request.onsuccess = function(e){
+      var data = request.result;
+      data.zIndex = newNote.style.zIndex;
+
+    // Put - Store Updated Text
+    var requestUpdate = store.put(data);
+
+    requestUpdate.onsuccess = function(){
+      console.log('Customer data updated');
+    };
+
+    requestUpdate.onerror = function(){
+      console.log('Error: Customer data not updated');
+    };
+
+    };
+  });
 
   // create closeButton
   var closeButton = document.createElement("div");
@@ -290,6 +428,102 @@ function existingNotes(id, top, left, textContent, timeStamp, zIndex){
   text.innerHTML = textContent;
   newNote.appendChild(text);
 
+  // Movement of note
+  $("#" + id).mousedown(function(e){
+    var mouseStartTop = e.pageY;
+    var mouseStartLeft = e.pageX;
+
+    // ZINDEX
+    highestZindex += 1;
+    newNote.style.zIndex = highestZindex;
+    console.log("existingNotes()mouseDown zIndex type: " + typeof newNote.style.zIndex);
+    // ===== update db with note's new zindex
+    // Get transaction - FInd customer record
+    var transaction = db.transaction(["notes"], "readwrite");
+    // Ask for objectStore
+    var store = transaction.objectStore("notes");
+    var request = store.get(id);
+
+    // onsuccess
+    request.onsuccess = function(e){
+      var data = request.result;
+      data.zIndex = newNote.style.zIndex;
+
+    // Put - Store Updated Text
+    var requestUpdate = store.put(data);
+
+    requestUpdate.onsuccess = function(){
+      console.log('Customer data updated');
+    };
+
+    requestUpdate.onerror = function(){
+      console.log('Error: Customer data not updated');
+    };
+
+    };
+    //END === ZINDEX
+    $(this).bind("mousemove", mousemove);
+
+  $("#" + id).mouseup(function(e){
+    $(this).unbind("mousemove", mousemove);
+    // ===== update db with note's new coods
+    // Get transaction - FInd customer record
+    var transaction = db.transaction(["notes"], "readwrite");
+    // Ask for objectStore
+    var store = transaction.objectStore("notes");
+    var request = store.get(id);
+
+    // onsuccess
+    request.onsuccess = function(e){
+      var data = request.result;
+      var notePos = $("#" + id).position();
+      data.top = notePos.top;
+      data.left = notePos.left;
+
+    // Put - Store Updated Text
+    var requestUpdate = store.put(data);
+
+    requestUpdate.onsuccess = function(){
+      console.log('Customer data updated');
+    };
+
+    requestUpdate.onerror = function(){
+      console.log('Error: Customer data not updated');
+    };
+
+    };
+    });
+
+  function mousemove(e){
+  var mouseTop = e.pageY;
+  var mouseLeft = e.pageX;
+
+  var diffTop = mouseTop - mouseStartTop;
+  var diffLeft = mouseLeft - mouseStartLeft;
+
+  // ===== move note
+  // Get transaction - FInd customer record
+  var transaction = db.transaction(["notes"], "readwrite");
+  // Ask for objectStore
+  var store = transaction.objectStore("notes");
+  var request = store.get(id);
+
+  // onsuccess
+  request.onsuccess = function(e){
+    var data = request.result;
+    // note current position from db
+    var noteTop = data.top;
+    var noteLeft = data.left;
+    //  note move to position
+    var notePosTop = noteTop + diffTop;
+    var notePosLeft = noteLeft + diffLeft;
+
+    $('#'+ id).css('top', notePosTop);
+    $('#'+ id).css('left', notePosLeft);
+
+  };
+  }
+});
   // remove sticky
   closeButton.addEventListener("click", function(e){
     newNote.parentNode.removeChild(newNote);

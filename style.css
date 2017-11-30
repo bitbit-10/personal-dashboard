@@ -96,6 +96,16 @@ body {
 #newNoteButton {
   position: absolute;
   top: 0;
+	font-size: 20px;
+	padding: 10px;
+	border-radius: 5px;
+	background: #00007f;
+	color: #ffdf00;
+	border: 0;
+  }
+
+#newNoteButton:hover  {
+	background: #6666ff;
 }
 .sticky {
   position: absolute;
