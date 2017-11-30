@@ -134,6 +134,9 @@ body {
 .text {
   margin: 1em;
 }
+.text:focus {
+  outline:0;
+}
 
 .timestamp {
   position: absolute;

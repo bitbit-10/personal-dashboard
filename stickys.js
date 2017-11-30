@@ -143,8 +143,6 @@ function addNote(){
     newNote(id, timeStamp);
     // properties of newNote
     var pos = $('#'+id).position();
-    // var idString = id.toString();
-    // console.log("idString" + typeof idString);
     var zIndex = document.getElementById(id).style.zIndex;
 
       var top = pos.top;
@@ -174,13 +172,6 @@ function newNote(id, timeStamp){
   var board = document.getElementById("stickysContainer");
   newNote.className = "sticky";
   newNote.id = id;
-  highestZindex += 1;
-  newNote.style.zIndex = highestZindex;
-  console.log("newNote() zIndex type: " + typeof newNote.style.zIndex);
-  newNote.addEventListener("click", function(){
-    newNote.style.zIndex = highestZindex + 1;
-  });
-  // console.log("newNote.previousSibling - sticky : " + newNote.previousSibling);
 
   // position of each new sticky
   var top = Math.round(Math.random() * 60) + "%";
@@ -211,8 +202,15 @@ function newNote(id, timeStamp){
   text.setAttribute('contenteditable', true);
   text.setAttribute('data-id', id);
   text.setAttribute('onkeyup', "updateNote(" + id + ")");
+  text.setAttribute('spellcheck', false);
   newNote.appendChild(text);
-
+  // set zIndex
+  highestZindex += 1;
+  newNote.style.zIndex = highestZindex;
+  newNote.addEventListener("click", function(){
+    newNote.style.zIndex = highestZindex + 1;
+    text.focus();
+  });
   // Movement of note
   $("#" + id).mousedown(function(e){
     var mouseStartTop = e.pageY;
@@ -221,7 +219,6 @@ function newNote(id, timeStamp){
     // ZINDEX
     highestZindex += 1;
     newNote.style.zIndex = highestZindex;
-    console.log("newNote()mouseDown zIndex type: " + typeof newNote.style.zIndex);
     // ===== update db with note's new zindex
     // Get transaction - FInd customer record
     var transaction = db.transaction(["notes"], "readwrite");
@@ -374,11 +371,37 @@ function existingNotes(id, top, left, textContent, timeStamp, zIndex){
   // position of each new sticky
   newNote.style.top = top + "px";
   newNote.style.left = left + "px";
+
+  // create closeButton
+  var closeButton = document.createElement("div");
+  closeButton.className = "closeButton";
+  newNote.appendChild(closeButton);
+
+  // create timestamp portion
+  var timestamp = document.createElement("div");
+  timestamp.className = "timestamp";
+  timestamp.innerHTML = timeStamp;
+  newNote.appendChild(timestamp);
+
+  // append new note with close button to board
+  board.appendChild(newNote);
+
+  // edit text content
+  var text = document.createElement("div");
+  text.className = "text";
+  text.setAttribute('contenteditable', true);
+  text.setAttribute('onkeyup', "updateNote(" + id + ")");
+  text.setAttribute('data-id', id);
+  text.setAttribute('spellcheck', false);
+  text.innerHTML = textContent;
+  newNote.appendChild(text);
+
+  // Set zIndex
   newNote.style.zIndex = zIndex;
   newNote.addEventListener("click", function(){
+    text.focus();
     highestZindex += 1;
     newNote.style.zIndex = highestZindex;
-    console.log("existingNotes() zIndex type: " + typeof newNote.style.zIndex);
     // ===== update db with note's new zindex
     // Get transaction - FInd customer record
     var transaction = db.transaction(["notes"], "readwrite");
@@ -405,29 +428,6 @@ function existingNotes(id, top, left, textContent, timeStamp, zIndex){
     };
   });
 
-  // create closeButton
-  var closeButton = document.createElement("div");
-  closeButton.className = "closeButton";
-  newNote.appendChild(closeButton);
-
-  // create timestamp portion
-  var timestamp = document.createElement("div");
-  timestamp.className = "timestamp";
-  timestamp.innerHTML = timeStamp;
-  newNote.appendChild(timestamp);
-
-  // append new note with close button to board
-  board.appendChild(newNote);
-
-  // edit text content
-  var text = document.createElement("div");
-  text.className = "text";
-  text.setAttribute('contenteditable', true);
-  text.setAttribute('onkeyup', "updateNote(" + id + ")");
-  text.setAttribute('data-id', id);
-  text.innerHTML = textContent;
-  newNote.appendChild(text);
-
   // Movement of note
   $("#" + id).mousedown(function(e){
     var mouseStartTop = e.pageY;
@@ -436,7 +436,6 @@ function existingNotes(id, top, left, textContent, timeStamp, zIndex){
     // ZINDEX
     highestZindex += 1;
     newNote.style.zIndex = highestZindex;
-    console.log("existingNotes()mouseDown zIndex type: " + typeof newNote.style.zIndex);
     // ===== update db with note's new zindex
     // Get transaction - FInd customer record
     var transaction = db.transaction(["notes"], "readwrite");
