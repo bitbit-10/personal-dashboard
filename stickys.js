@@ -203,6 +203,13 @@ function newNote(id, timeStamp){
   text.setAttribute('data-id', id);
   text.setAttribute('onkeyup', "updateNote(" + id + ")");
   text.setAttribute('spellcheck', false);
+  // text.addEventListener('keydown', function(e){
+  //   var element = this;
+  //   if ((element.offsetHeight < element.scrollHeight)  || (element.offsetWidth < element.scrollWidth)){
+  //         e.preventDefault();
+  //   }
+  // });
+
   newNote.appendChild(text);
   // set zIndex
   highestZindex += 1;
@@ -394,8 +401,13 @@ function existingNotes(id, top, left, textContent, timeStamp, zIndex){
   text.setAttribute('data-id', id);
   text.setAttribute('spellcheck', false);
   text.innerHTML = textContent;
+  // text.addEventListener('keydown', function(e){
+  //   var element = this;
+  //   if ((element.offsetHeight < element.scrollHeight) || (element.offsetWidth < element.scrollWidth)){
+  //     e.preventDefault();
+  //   }
+  // });
   newNote.appendChild(text);
-
   // Set zIndex
   newNote.style.zIndex = zIndex;
   newNote.addEventListener("click", function(){
