@@ -89,7 +89,7 @@ body {
 /*Stickys*/
 #stickysContainer {
   position: relative;
-  background-image: url(../images/board.jpg);
+  background-image: url(https://bitbit-10.github.io/personal-dashboard/images/board.jpg);
   padding-top: 66.67%; /*aspect ratio*/
   width: 100%;
 }
@@ -119,7 +119,7 @@ body {
 .closeButton {
   position: absolute;
   display: none;
-  background-image: url(../images/remove.png);
+  background-image: url(https://bitbit-10.github.io/personal-dashboard/images/remove.png);
   height: 3em;
   width: 3em;
   top: -15px;
