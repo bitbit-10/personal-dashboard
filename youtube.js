@@ -5,7 +5,7 @@ function start(){
     'apiKey': 'AIzaSyBgZKpd7ZZg0At28xQzjQ3WE0QEu_oALys'
   }).then(function(){
     var search = document.getElementById("search").value;
-    var url = 'https://www.googleapis.com/youtube/v3/search?part=snippet&q=' + search + '&maxResults=6&type=video&videoEmbeddable=true';
+    var url = 'https://www.googleapis.com/youtube/v3/search?part=snippet&q=' + search + '&maxResults=20&type=video&videoEmbeddable=true';
     // 3. Initialise and make the API request.
     return gapi.client.request({
       'path': url,
@@ -51,6 +51,13 @@ function select(videoID, videoTitle) {
 
   document.getElementById("result").innerHTML = videoTitle;
 }
+var input = document.getElementById("search");
+input.addEventListener("keypress", function(e){
+  var key = e.keyCode;
+  if (key === 13) {
+    newSearch();
+  }
+});
 // Remove existing results from previous search
 function newSearch(){
   document.getElementById("resultsContainer").innerHTML = "";

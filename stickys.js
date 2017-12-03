@@ -36,7 +36,6 @@ $(document).ready(function(){
   function updateNote(id){
 
   // 1) Newly entered text
-  // var dataId = "[data-id=\"" + id + "\"]";
   var newText = $("[data-id=\"" + id + "\"]").text();
   console.log("[data-id=\"" + id + "\"]");
   console.log("Modified Text : " + newText);
@@ -178,9 +177,6 @@ function newNote(id, timeStamp){
   var left = Math.round(Math.random() * 60) + "%";
   newNote.style.top = top;
   newNote.style.left = left;
-  // newNote.style.zIndex = "-1";
-  // var rect = newNote.getBoundingClientRect();
-  // console.log("Rect Left :" + rect.top);
 
   // create closeButton
   var closeButton = document.createElement("div");
@@ -217,6 +213,11 @@ function newNote(id, timeStamp){
   newNote.addEventListener("click", function(){
     newNote.style.zIndex = highestZindex + 1;
     text.focus();
+  });
+  // remove sticky
+  closeButton.addEventListener("click", function(e){
+    newNote.parentNode.removeChild(newNote);
+    removeNote(id);
   });
   // Movement of note
   $("#" + id).mousedown(function(e){
@@ -313,22 +314,6 @@ function newNote(id, timeStamp){
   };
   }
 });
-
-// ===click note, bring focus to text - indicate able to type text - idea? use id="..." or id from db
-  // newNote.addEventListener("click", function(e){
-  //   var x = newNote.previousSibling.id;
-  //   console.log("newNote.previousSibling - click : " + x);
-  //   var div = document.getElementsByClassName("text")[0];
-  //   setTimeout(function(){
-  //     div.focus();
-  //   }, 0);
-  // });
-// ====end==
-  // remove sticky
-  closeButton.addEventListener("click", function(e){
-    newNote.parentNode.removeChild(newNote);
-    removeNote(id);
-  });
 }
 // delete a note
 function removeNote(id){
@@ -392,6 +377,12 @@ function existingNotes(id, top, left, textContent, timeStamp, zIndex){
 
   // append new note with close button to board
   board.appendChild(newNote);
+
+  // remove sticky
+  closeButton.addEventListener("click", function(e){
+    newNote.parentNode.removeChild(newNote);
+    removeNote(id);
+  });
 
   // edit text content
   var text = document.createElement("div");
@@ -535,10 +526,4 @@ function existingNotes(id, top, left, textContent, timeStamp, zIndex){
   };
   }
 });
-  // remove sticky
-  closeButton.addEventListener("click", function(e){
-    newNote.parentNode.removeChild(newNote);
-    removeNote(id);
-  });
-
 }

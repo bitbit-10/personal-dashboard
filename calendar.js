@@ -16,7 +16,7 @@
     }
     function removeAddDates(){
       var dates = document.getElementsByClassName("dates")[0];
-      var container = document.getElementsByClassName("container")[0];
+      var container = document.getElementsByClassName("calendarContainer")[0];
       container.removeChild(dates);
       var newDates = document.createElement("UL");
       newDates.className = "dates";

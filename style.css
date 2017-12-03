@@ -8,25 +8,36 @@ ul {
 body {
   font-size: 62.5%;
   font-family: Verdana, sans-serif;
-  background-color: #ffffff;
+  background-color: #fafafa;
   margin: 0;
 }
+/*Container for Wholepage*/
 #allContainer {
-  margin-top: 1%;
-  margin-left: 1%;
+  width: 90%;
+  margin-top: 3%;
+  margin-left: auto;
+  margin-right: auto;
 }
 /*Container for Calendar + Stickys*/
-.container {
-  width: 55%;
-  float:left;
+.leftContainer {
+  float: left;
+  width: 60%;
+}
+
+.calendarContainer {
+  width: 100%;
+  height: 39em;
+  border-radius: 1em 1em 0 0;
+  background-color: rgba(69,113,218,1);
 }
 /*Calendar*/
 .monthYear {
   width: 100%;
   height: 20%;
-  background-color: #7a5230; /*#614126*/
+  background-color: rgba(15,51,94,1);
   text-align: center;
-  padding: 4.5em 2em;
+  padding: 2.5em 2em;
+  border-radius: 1em 1em 0 0;
 }
 .monthYear ul {
   padding: 0;
@@ -34,7 +45,7 @@ body {
 }
 
 .monthYear ul li {
-  color: white;
+  color: rgba(128,194,255,1);
   font-size:1.5em;
   text-transform: uppercase;
   letter-spacing: 0.15em;
@@ -53,8 +64,9 @@ body {
   float: right;
   padding-top: 0.5em;
 }
+
 .dayNames {
-  background-color: rgba(255,255,51,0.6);
+  background-color: rgba(16,78,148,1);
   padding: 0.8em 0;
   margin: 0;
 }
@@ -64,22 +76,21 @@ body {
   margin-right: -0.11em;
   text-align: center;
   font-size: 1.2em;
-  color: #666;
+  color: rgba(128,194,255,1);
 }
 .dates {
-  background-color: rgba(218,165,32, 0.7);
+  background-color: rgba(69,113,218,1);
   padding: 0.8em 0;
   margin: 0;
 }
 .dates li{
   display: inline-block;
   width: 13.6%;
-  /*height: 2.8em;*/
   padding:1em 0;
   margin: 0 0.2em 0 0;
   text-align: center;
   font-size: 1.3em;
-  color: #777;
+  color: rgba(128,194,255,1);
 }
 .active {
   background-color: #1abc9c;
@@ -88,24 +99,33 @@ body {
 
 /*Stickys*/
 #stickysContainer {
+  float: left;
   position: relative;
   background-image: url(https://bitbit-10.github.io/personal-dashboard/images/board.jpg);
-  padding-top: 66.67%; /*aspect ratio*/
+  background-size: 100%;
+  background-repeat: no-repeat;
+  padding-top: 66.67%;
+  margin-top: 5%;
+  border-radius: 1em;
   width: 100%;
 }
 #newNoteButton {
   position: absolute;
-  top: 0;
-	font-size: 20px;
-	padding: 10px;
-	border-radius: 5px;
-	background: #00007f;
-	color: #ffdf00;
+  top: 3%;;
+  left: 2%;
+  cursor: pointer;
+	font-size: 1.5em;
+	padding: 0.5em;
+	border-radius: 0.2em;
+	background: #545454;
+  color: #bdbdbd;
+  letter-spacing: 0.02em;
 	border: 0;
   }
 
 #newNoteButton:hover  {
-	background: #6666ff;
+	background: rgba(69,113,218,1);
+  color: lightyellow;
 }
 .sticky {
   position: absolute;
@@ -154,27 +174,40 @@ body {
 
 /*Youtube*/
 #youtubeContainer {
-  width: 30%;
+  position: relative;
+  width: 35%;
   float: left;
-  margin-left: 7%;
+  margin-left: 5%;
+  margin-top: 0.5%;
+  border-radius: 1em 1em 0 0;
+  background-color: #fafafa;
 }
 #searchContainer {
+  margin-top: 10%;
   margin-bottom: 5%;
   height: 3em;
 }
 #search {
-  width: 50%;
+  width: 65%;
   height: 100%;
-  margin-left: 10%;
+  font-size: 1.2em;
+  letter-spacing: 0.015em;
 }
 #searchBtn {
-  width: 15%;
+  width: 30%;
   height: 100%;
   margin-left: 5%;
+  cursor: pointer;
+  font-size: 1.25em;
+  letter-spacing: 0.06em;
+  border-radius: 0;
+  color: #bdbdbd;
+  background: #545454;
+  border: 0;
 }
 #result {
-  font-size: 1.6em;
-  font-weight: bold;
+  font-size: 1.2em;
+  color: #151515;
 }
 #iframeContainer {
   position: relative;
@@ -184,6 +217,7 @@ body {
 }
 iframe {
   width: 100%;
+  border: 0;
 }
 #iframeContainer iframe {
   position: absolute;
@@ -199,7 +233,7 @@ li {
 }
 .resultsThumbnails {
   width: 100%;
-  height: 11em;
+  height: 7em;
   margin-top: 5%;
 }
 
@@ -213,16 +247,77 @@ li {
   width: 60%;
 }
 .title {
-  font-size: 1.2em;
-  font-weight: 600;
-  margin-top: 11%;
+  font-size: 1.1em;
+  letter-spacing: 0.02em;
+  margin-top: 2.5%;
+  color: #151515;
 }
 .channelTitle {
-  font-size: 1.1em;
-  color: grey;
+  font-size: 1em;
+  letter-spacing: 0.02em;
+  color: #545454;
   margin-top: -3%;
 }
 #resultsContainer {
   height: 45em;
   overflow:auto;
+}
+/*== Media Responsive for different Desktop browser window size ==*/
+@media only screen and (min-width: 765px) {
+  #allContainer {
+    width: 90%;
+  }
+}
+@media only screen and (min-width: 848px) {
+  #allContainer {
+    width: 87%;
+  }
+  #resultsContainer {
+    height: 46em;
+  }
+  }
+@media only screen and (min-width: 948px) {
+  #allContainer {
+    width: 80%;
+  }
+}
+@media only screen and (min-width: 1008px) {
+  #allContainer {
+    width: 75%;
+    margin-top: 2.5%;
+  }
+  #resultsContainer {
+    height: 46.5em;
+  }
+
+}
+@media only screen and (min-width: 1200px) {
+  #allContainer {
+    width: 65%;
+  }
+  #resultsContainer {
+    height: 47em;
+  }
+}
+
+@media only screen and (min-width: 1400px) {
+  #allContainer {
+    width: 60%;
+    margin-top: 2.2%;
+  }
+  #resultsContainer {
+    height: 47.3em;
+  }
+}
+@media only screen and (min-width: 1550px) {
+  #allContainer {
+    width: 55%;
+    margin-top: 1.8%;
+  }
+}
+
+@media only screen and (min-width: 1680px) {
+  #allContainer {
+    width: 50%;
+  }
 }
