@@ -1,4 +1,3 @@
-
     function leapYearCheck(year){
       if (year % 4 === 0) {
         if(year % 100){
@@ -69,7 +68,10 @@
         }
         month = month - 1;
         var leapYear = leapYearCheck(year);
-        monthNameDaysStart(month, year, 0, leapYear);
+
+        var today = new Date();
+        var todayDate = today.getDate();
+        monthNameDaysStart(month, year, todayDate, leapYear);
       }
 
       function next(){
@@ -118,7 +120,10 @@
         }
         month = month + 1;
         var leapYear = leapYearCheck(year);
-        monthNameDaysStart(month, year, 0, leapYear);
+
+        var today = new Date();
+        var todayDate = today.getDate();
+        monthNameDaysStart(month, year, todayDate, leapYear);
       }
 
       function today() {
@@ -148,12 +153,16 @@
         var year = todayYear;
         var x = new Date(year, month, 1);
         var startDay = x.getDay();
-        makeCal(monthName, year, numOfDays, startDay, todayDate);
+        makeCal(monthName, year, numOfDays, startDay, todayDate, month);
       }
 
 
-      function makeCal(monthName, year, numOfDays, startDay, todayDate){
-
+      function makeCal(monthName, year, numOfDays, startDay, todayDate, month){
+        var now = new Date();
+        var nowDate = now.getDate();
+        //today - to find start position
+        var nowMonth = now.getMonth(); //0-11
+        var nowYear = now.getFullYear();
         //Header display month, year
         var headerMonth = document.getElementById("month");
         headerMonth.innerHTML = monthName + "<br><span id=\"year\">" + year + "</span>";
@@ -172,15 +181,16 @@
 
         //i starts from 1 because the number of days in a month start from 1
         for (j = 1; j <= numOfDays; j++) {
-          if (j == todayDate){
-            var node = document.createElement("LI");
-            var textnode = document.createTextNode(j);
+          if (j == todayDate && month == nowMonth && year == nowYear){
 
-            node.appendChild(textnode);
-            node.style.width = "13.6%";
-            node.className = "active";
+            var todaynode = document.createElement("LI");
+            var todaytextnode = document.createTextNode(j);
 
-            dates.appendChild(node);
+            todaynode.appendChild(todaytextnode);
+            todaynode.style.width = "13.6%";
+            todaynode.className = "active";
+
+            dates.appendChild(todaynode);
           }else {
             var node = document.createElement("LI");
             var textnode = document.createTextNode(j);
