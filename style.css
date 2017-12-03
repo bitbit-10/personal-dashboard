@@ -259,7 +259,7 @@ li {
   margin-top: -3%;
 }
 #resultsContainer {
-  height: 45em;
+  height: 40em;
   overflow:auto;
 }
 /*== Media Responsive for different Desktop browser window size ==*/
@@ -267,18 +267,24 @@ li {
   #allContainer {
     width: 90%;
   }
+  #resultsContainer {
+    height: 41em;
+  }
 }
 @media only screen and (min-width: 848px) {
   #allContainer {
     width: 87%;
   }
   #resultsContainer {
-    height: 46em;
+    height: 43em;
   }
   }
 @media only screen and (min-width: 948px) {
   #allContainer {
     width: 80%;
+  }
+  #resultsContainer {
+    height: 43.5em;
   }
 }
 @media only screen and (min-width: 1008px) {
@@ -287,7 +293,7 @@ li {
     margin-top: 2.5%;
   }
   #resultsContainer {
-    height: 46.5em;
+    height: 44.2em;
   }
 
 }
@@ -296,7 +302,7 @@ li {
     width: 65%;
   }
   #resultsContainer {
-    height: 47em;
+    height: 44.5em;
   }
 }
 
@@ -306,7 +312,7 @@ li {
     margin-top: 2.2%;
   }
   #resultsContainer {
-    height: 47.3em;
+    height: 45em;
   }
 }
 @media only screen and (min-width: 1550px) {
@@ -314,10 +320,16 @@ li {
     width: 55%;
     margin-top: 1.8%;
   }
+  #resultsContainer {
+    height: 45.2em;
+  }
 }
 
 @media only screen and (min-width: 1680px) {
   #allContainer {
     width: 50%;
+  }
+  #resultsContainer {
+    height: 45.4em;
   }
 }
