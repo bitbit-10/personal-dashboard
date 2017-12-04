@@ -214,13 +214,10 @@ function newNote(id, timeStamp){
     newNote.style.zIndex = highestZindex + 1;
     text.focus();
   });
-  // remove sticky
-  closeButton.addEventListener("click", function(e){
-    newNote.parentNode.removeChild(newNote);
-    removeNote(id);
-  });
+
   // Movement of note
-  $("#" + id).mousedown(function(e){
+  $("#" + id).mousedown(mousedown);
+    function mousedown(e){
     var mouseStartTop = e.pageY;
     var mouseStartLeft = e.pageX;
 
@@ -267,8 +264,12 @@ function newNote(id, timeStamp){
     request.onsuccess = function(e){
       var data = request.result;
       var notePos = $("#" + id).position();
-      data.top = notePos.top;
-      data.left = notePos.left;
+      if (notePos) {
+        data.top = notePos.top;
+        data.left = notePos.left;
+      } else {
+        return;
+      }
 
     // Put - Store Updated Text
     var requestUpdate = store.put(data);
@@ -313,6 +314,11 @@ function newNote(id, timeStamp){
 
   };
   }
+}
+// remove sticky
+closeButton.addEventListener("click", function(e){
+  newNote.parentNode.removeChild(newNote);
+  removeNote(id);
 });
 }
 // delete a note
@@ -415,7 +421,11 @@ function existingNotes(id, top, left, textContent, timeStamp, zIndex){
     // onsuccess
     request.onsuccess = function(e){
       var data = request.result;
-      data.zIndex = newNote.style.zIndex;
+      if (data){
+        data.zIndex = newNote.style.zIndex;
+      } else {
+        return;
+      }
 
     // Put - Store Updated Text
     var requestUpdate = store.put(data);
@@ -479,8 +489,13 @@ function existingNotes(id, top, left, textContent, timeStamp, zIndex){
     request.onsuccess = function(e){
       var data = request.result;
       var notePos = $("#" + id).position();
-      data.top = notePos.top;
-      data.left = notePos.left;
+      if (notePos) {
+        data.top = notePos.top;
+        data.left = notePos.left;
+      } else {
+        return;
+      }
+
 
     // Put - Store Updated Text
     var requestUpdate = store.put(data);
