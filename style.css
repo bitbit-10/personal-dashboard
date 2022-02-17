@@ -182,29 +182,44 @@ body {
   border-radius: 1em 1em 0 0;
   background-color: #fafafa;
 }
-#searchContainer {
+#headingContainer {
   margin-top: 10%;
   margin-bottom: 5%;
-  height: 3em;
 }
-#search {
-  width: 65%;
+
+#heading {
+  width: 100%;
   height: 100%;
-  font-size: 1.2em;
-  letter-spacing: 0.015em;
-}
-#searchBtn {
-  width: 30%;
-  height: 100%;
-  margin-left: 5%;
-  cursor: pointer;
   font-size: 1.25em;
   letter-spacing: 0.06em;
-  border-radius: 0;
-  color: #bdbdbd;
-  background: #545454;
-  border: 0;
+  opacity: 85%;
+  color: #104e94;
+  font-weight: 600;
 }
+
+#buttonSubcontainerOne{
+  width: 50%;
+  float: left;
+}
+#buttonSubcontainerTwo{
+  width: 50%;
+  float: right;
+}
+.decadeBtn {
+  width: 44%;
+  height: 3.8em;
+  margin-top: 5%;
+  cursor: pointer;
+  border-radius: 1.9em;
+  opacity: 85%;
+  background: #d7dbdd;
+  border: 0;
+  font-size: 1.25em;
+  letter-spacing: 0.06em;
+  color: #104e94;
+  font-weight: 600;
+}
+
 #result {
   font-size: 1.2em;
   color: #151515;
@@ -231,60 +246,21 @@ li {
   margin: 0;
   padding: 0;
 }
-.resultsThumbnails {
-  width: 100%;
-  height: 7em;
-  margin-top: 5%;
-}
 
-.thumbnail {
-  height: 100%;
-  float: left;
-}
-#vidDetails {
-  float: left;
-  margin-left: 2%;
-  width: 60%;
-}
-.title {
-  font-size: 1.1em;
-  letter-spacing: 0.02em;
-  margin-top: 2.5%;
-  color: #151515;
-}
-.channelTitle {
-  font-size: 1em;
-  letter-spacing: 0.02em;
-  color: #545454;
-  margin-top: -3%;
-}
-#resultsContainer {
-  height: 40em;
-  overflow:auto;
-}
 /*== Media Responsive for different Desktop browser window size ==*/
 @media only screen and (min-width: 765px) {
   #allContainer {
     width: 90%;
-  }
-  #resultsContainer {
-    height: 41em;
   }
 }
 @media only screen and (min-width: 848px) {
   #allContainer {
     width: 87%;
   }
-  #resultsContainer {
-    height: 43em;
-  }
   }
 @media only screen and (min-width: 948px) {
   #allContainer {
     width: 80%;
-  }
-  #resultsContainer {
-    height: 43.5em;
   }
 }
 @media only screen and (min-width: 1008px) {
@@ -292,17 +268,10 @@ li {
     width: 75%;
     margin-top: 2.5%;
   }
-  #resultsContainer {
-    height: 44.2em;
-  }
-
 }
 @media only screen and (min-width: 1200px) {
   #allContainer {
     width: 65%;
-  }
-  #resultsContainer {
-    height: 44.5em;
   }
 }
 
@@ -311,25 +280,16 @@ li {
     width: 60%;
     margin-top: 2.2%;
   }
-  #resultsContainer {
-    height: 45em;
-  }
 }
 @media only screen and (min-width: 1550px) {
   #allContainer {
     width: 55%;
     margin-top: 1.8%;
   }
-  #resultsContainer {
-    height: 45.2em;
-  }
 }
 
 @media only screen and (min-width: 1680px) {
   #allContainer {
     width: 50%;
-  }
-  #resultsContainer {
-    height: 45.4em;
   }
 }

@@ -1,67 +1,82 @@
 // ====== YOUTUBE ======
-function start(){
+function start(id){
+
+    var videoid;
+
+    if (typeof id == 'undefined') {
+      videoid = "Kt-tLuszKBA";
+    } else {
+      videoid = id;
+    }
+
   // 2. Initialise the Javascript client library.
   gapi.client.init({
-    'apiKey': 'AIzaSyBgZKpd7ZZg0At28xQzjQ3WE0QEu_oALys'
+    'apiKey': 'AIzaSyA3Tswr1mFOlEHLK4xPxQfHYaeQaV6nS8Q'
   }).then(function(){
-    var search = document.getElementById("search").value;
-    var url = 'https://www.googleapis.com/youtube/v3/search?part=snippet&q=' + search + '&maxResults=20&type=video&videoEmbeddable=true';
+
+      var url = 'https://www.googleapis.com/youtube/v3/videos?part=snippet&id=' + videoid ;
+
     // 3. Initialise and make the API request.
     return gapi.client.request({
+
       'path': url,
+
     });
   }).then(function(response){
-    console.log(response.result);
 
-    var mainVid = document.getElementById("mainVid");
-    mainVid.setAttribute("src", "https://www.youtube.com/embed/" +  response.result.items[0].id.videoId);
-    document.getElementById("result").innerHTML = response.result.items[0].snippet.title;
+      var mainVid = document.getElementById("mainVid");
 
-    // loop through results array and create thumbnails for each
-    var searchResults = response.result.items;
-    var resultsList = document.createElement("div");
-    resultsList.setAttribute("id", "resultsList");
+      mainVid.setAttribute("src", "https://www.youtube.com/embed/" +  response.result.items[0].id);
+      document.getElementById("result").innerHTML = response.result.items[0].snippet.title;
 
-    for (i = 0; i < searchResults.length; i++) {
-      var videoTitle = response.result.items[i].snippet.title;
-      var channelTitle = response.result.items[i].snippet.channelTitle;
-      var imgURL = response.result.items[i].snippet.thumbnails.default.url;
-      var videoID = response.result.items[i].id.videoId;
-
-
-      var resultsThumbnails = document.createElement("div");
-      resultsThumbnails.className = "resultsThumbnails";
-      resultsThumbnails.innerHTML = "<img class=\"thumbnail\" src=\"" + imgURL + "\" alt=\"result thumbnail\">" +
-      "<div id=\"vidDetails\">" +
-        "<p class=\"title\">" + videoTitle + "</p>" +
-        "<p class=\"channelTitle\">" + channelTitle + "</p>";
-        resultsThumbnails.setAttribute("onclick", "select(\"" + videoID + "\",\"" + videoTitle + "\")");
-        resultsList.appendChild(resultsThumbnails);
-        document.getElementById("resultsContainer").appendChild(resultsList);
-    }
   }, function(reason){
-    console.log('Error: ' + reason.result.error.message);
-    document.getElementById("result").innerHTML = 'Error: ' + reason.result.error.message;
+
+      console.log('Error: ' + reason.result.error.message);
+      document.getElementById("result").innerHTML = 'Error: ' + reason.result.error.message;
+
   });
 }
 
-function select(videoID, videoTitle) {
-  var mainVidSelect = document.getElementById("mainVid");
-  mainVidSelect.setAttribute("src", "https://www.youtube.com/embed/" + videoID);
+function changeDecade(decade){
 
-  document.getElementById("result").innerHTML = videoTitle;
-}
-var input = document.getElementById("search");
-input.addEventListener("keypress", function(e){
-  var key = e.keyCode;
-  if (key === 13) {
-    newSearch();
+  switch (decade){
+
+    case 50:
+    id = "5LmppKojtWI";
+    break;
+
+    case 60:
+    id = "WStvRDdxdWY";
+    break;
+
+    case 70:
+    id = "5_-DqyiBng0";
+    break;
+
+    case 80:
+    id = "c40SjIZEfcg";
+    break;
+
+    case 90:
+    id = "AuIKwMGsNlU";
+    break;
+
+    case 00:
+    id = "S4bqUlpnF20";
+    break;
+
+    case 2010:
+    id = "nRYTrpQHJJk";
+    break;
+
+    case 2020:
+    id = "mnc9pvuvSuk";
+    break;
+
+    default:
+    id = "Kt-tLuszKBA";
   }
-});
-// Remove existing results from previous search
-function newSearch(){
-  document.getElementById("resultsContainer").innerHTML = "";
-  start();
+  start(id);
 }
 
 gapi.load('client', start);

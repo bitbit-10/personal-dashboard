@@ -46,9 +46,9 @@
         </div>
         <!-- Right Half -->
         <div id="youtubeContainer">
+
             <!-- Youtube - 1st Part - Main Video -->
             <div id="mainVidContainer">
-
                 <!-- subpart - error msg -->
                 <div id="error"></div>
                 <!-- subpart - Main Video to watch -->
@@ -58,18 +58,30 @@
                 <!-- subpart - Title of main video -->
                 <p id="result"></p>
             </div>
-            <!-- subpart - search bar -->
-            <div id="searchContainer">
-              <input id="search" type="text"><button id="searchBtn" onclick="newSearch()">Search</button>
+
+            <!-- 2nd Part - Button Panel for music decades -->
+            <div id="headingContainer">
+              <p id="heading">Pick a music decade</p>
             </div>
-            <!-- Youtube - 2nd Part - Search Results -->
-            <div id="resultsContainer">
+            <div id="buttonContainer">
+              <div id="buttonSubcontainerOne">
+                <button class="decadeBtn" onclick='changeDecade(50)'>50's</button><br>
+                <button class="decadeBtn" onclick='changeDecade(60)'>60's</button><br>
+                <button class="decadeBtn" onclick='changeDecade(70)'>70's</button><br>
+                <button class="decadeBtn" onclick='changeDecade(80)'>80's</button><br>
+              </div>
+              <div id="buttonSubcontainerTwo">
+                <button class="decadeBtn" onclick='changeDecade(90)'>90's</button><br>
+                <button class="decadeBtn" onclick='changeDecade(00)'>00's</button><br>
+                <button class="decadeBtn" onclick='changeDecade(2010)'>2010's</button><br>
+                <button class="decadeBtn" onclick='changeDecade(2020)'>2020's</button><br>
+              </div>
             </div>
+
         </div>
     </div>
         <script src="https://apis.google.com/js/api.js"></script>
         <script src="youtube.js"></script>
-
 
   </body>
 </html>
